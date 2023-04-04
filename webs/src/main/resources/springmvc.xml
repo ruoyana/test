@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:lang="http://www.springframework.org/schema/lang"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.3.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:jee="http://www.springframework.org/schema/jee"
+	   xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:cache="http://www.springframework.org/schema/cache"
+	   xmlns:c="http://www.springframework.org/schema/c"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns="http://www.springframework.org/schema/beans">
+
+
+	<context:component-scan use-default-filters="false" base-package="mycs">
+		<context:include-filter expression="org.springframework.stereotype.Controller"	type="annotation" />
+		<context:include-filter expression="org.springframework.web.bind.annotation.ControllerAdvice" type="annotation" />
+
+		<!-- 在Spring 整合 JPA中 上面的插入会引起问题 -->
+		<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Component" /> -->
+	</context:component-scan>
+
+
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property value="1" name="order" />
+	</bean>
+
+
+	<bean
+			class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- <property name="prefix" value="/WEB-INF/"></property> -->
+		<!--		<property value="/WEB-INF/jsp/" name="prefix" />-->
+		<property value="/WEB-INF/" name="prefix" />
+		<property value=".jsp" name="suffix" />
+		<property value="50" name="order" />
+	</bean>
+
+
+	<mvc:default-servlet-handler />
+
+
+	<bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">
+		<property value="i18n" name="basename" />
+		<property value="utf-8" name="defaultEncoding" />
+	</bean>
+
+
+
+	<!-- 自定义参数绑定 -->
+	<bean id="conversionService"
+		  class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<!-- 转换器 -->
+		<property name="converters">
+			<list>
+				<!-- 日期类型转换 -->
+				<bean class="mycs.contros.DateConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+
+
+	<bean class="org.springframework.web.servlet.i18n.SessionLocaleResolver" id="localeResolver" />
+	<!-- 配置 LocaleChanceInterceptor 拦截器 -->
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+	</mvc:interceptors>
+
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+		<property value="UTF-8" name="defaultEncoding" />
+		<property value="5120000" name="maxUploadSize" />
+	</bean>
+
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property value="ex" name="exceptionAttribute" />
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exceptoin">exception</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

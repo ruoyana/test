@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context  >
+
+		      <Resource 
+    	name="mydataSource" 
+        auth="Container" 
+        type="javax.sql.DataSource" 
+        username="root" 
+        password="12345678"
+        maxIdle="2" 
+        maxWait="2" 
+        maxActive="2"
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/test?serverTimezone=GMT"
+        logAbandoned="true" 
+        removeAbandonedTimeout ="5"
+        removeAbandoned ="true"/>
+
+
+      <Resource 
+    	name="one" 
+        auth="Container" 
+        type="javax.sql.DataSource" 
+        username="root" 
+        password="123456" 
+        maxIdle="2" 
+        maxWait="2" 
+        maxActive="2"
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/test?serverTimezone=GMT"
+        logAbandoned="true" 
+        removeAbandonedTimeout ="5"
+        removeAbandoned ="true"/>
+        
+
+        
+        <!-- name 表示指定的jdbv,jndi名称   -->
+        <!-- auth 管理权限，指定管理Resource的Manager，可以是Container或Application  -->
+        <!-- type 指出Resource所属的类名，是什么类型的数据源，使用标准的javax.sql.DataSource -->
+        <!-- maxActive  默认值是 8, 连接池中同时可以分派的最大活跃连接数，设为0表示无限制  -->
+        <!-- maxIdle 连接池中最多可空闲的连接数  默认是 8  -->
+        <!-- maxWait 为连接最大的等待时间，单位毫秒，如果超过此时间将接到异常。设为-1表示无限制 -->
+        <!-- logAbandoned 表示被丢弃的数据库连接是否做记录，以便跟踪 -->
+        <!-- username 表示数据库用户名 -->
+        <!-- password 表示数据库用户的密码 -->
+        <!-- driverClassName	  数据库驱动类   -->
+        <!-- url 数据库连接url  -->
+        <!-- removeAbandonedTimeout : 默认值是 300( 秒 ), 活动连接的最大空闲时间 -->
+        <!-- removeAbandoned : 默认值是 false, 是否清理 removeAbandonedTimeout 秒没有使用的活动连接 , 清理后并没有放回连接池   -->
+        <!-- logAbandoned : 默认值 false, 连接池收回空闲的活动连接时是否打印消息 -->
+        <!-- testOnBorrow : 默认值是 true ，当从连接池取连接时，验证这个连接是否有效 -->
+        <!-- testOnReturn : 默认值是 flase, 当从把该连接放回到连接池的时，验证这个连接是否有效 -->
+        <!-- testWhileIdle : 默认值是 false, 当连接池中的空闲连接是否有效 -->
+        <!-- timeBetweenEvictionRunsMilis : 默认值是 -1 ，每隔一段多少毫秒跑一次回收空闲线程的线程 -->
+        <!-- numTestsPerEvictionRun : 默认值是 3 ，每次验证空闲连接的连接数目 -->
+        <!-- minEvictableIdleTimeMilis : 默认值是 1000 * 60 * 30(30 分钟 ) ，连接池中连接可空闲的时间 -->
+        <!-- connectionInitSqls : 默认值是 null, 一组用来初始化连接的 sql 语句，这些语句只在连接工厂创建连接时执行一次。 -->
+        <!-- validationQuery : 一条 sql 语句，用来验证数据库连接是否正常。这条语句必须是一个查询模式，并至少返回一条数据。一般用“ select 1 ” -->
+        <!-- initialSize ： 默认值是 0, 连接池创建连接的初始连接数目 -->
+        <!-- minIdle : 默认是 0, 连接数中最小空闲连接数 -->
+</Context>

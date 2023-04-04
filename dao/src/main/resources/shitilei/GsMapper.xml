@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 如果是使用xml 合并注解的方式的话 这个namespace 就要指定为 (注解)接口类的路径了 -->
+<mapper namespace="mycs.daos.GsMapper">  <!-- 调用的名称 比如:Main方法要调用这里面的方法就要 根据这个来-->
+	
+	<resultMap type="mycs.en.Gs" id="qgs">
+			<id column="sid" property="sid"/>
+			<result column="yuangong" property="yuangong"/>
+			
+			<collection property="user" javaType="mycs.en.User">
+				<id column="id" property="id"/>
+				<result column="name" property="name"/>
+				<result column="sex" property="sex"/>
+				<result column="addr" property="addr"/>
+				<result column="password" property="password"/>
+				<result column="birth" property="birth"/>
+				<result column="money" property="money"/>
+				<result column="head"  property="head"/>
+				<result column="gs_id" property="gs_id"/>
+			</collection>
+			
+	</resultMap>
+
+    <select id="queryGs" resultMap="qgs" parameterType="int" >
+		select * from gongsi limit #{pageNo},#{pageSize}
+    </select>
+    
+    
+    <select id="gssums" resultType="int" parameterType="int">
+    	select count(*) from gongsi
+    </select>
+    
+    <select id="qugs" resultType="mycs.en.Gs">
+    	select * from gongsi
+    </select>
+    
+    
+   <select id="gsqushangye" resultType="int" parameterType="int">
+		select count(*) from gongsi
+	</select>
+	
+	<select id="gsdelete" resultType="java.lang.Boolean" parameterType="int" >
+		delete from gongsi where sid = #{sid}
+		
+	</select>
+	
+	<insert id="gsadd" parameterType="mycs.en.Gs">
+		insert into gongsi(yuangong) value(#{yuangong})
+		
+	</insert>
+    
+    
+    <update id="gsupdate" parameterType="mycs.en.User">
+		update gongsi set 
+		yuangong=#{yuangong} 
+		where sid=#{sid}
+	</update>
+	
+	<select id="quidgs" parameterType="int" resultType="mycs.en.Gs">
+		select * from gongsi where sid = #{id}
+	</select>
+	
+	
+	<select id="getUsers"  resultType="mycs.en.User">
+		select * from user
+	</select>
+	
+    
+    
+    
+    
+    
+    
+    
+</mapper>
